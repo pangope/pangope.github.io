@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>HaikuVerse</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+      }
+
+      body {
+        display: table;
+      }
+
+      .login_form {
+        text-align: center;
+        display: table-cell;
+        vertical-align: middle;
+      }
+
+      a {
+        display: block; /* Change the display to block, for responsive reasons (see below) */
+        color: white; /* White text color */
+        text-align: center; /* Center the text */
+        padding: 14px 20px; /* Add some padding */
+        margin: 10px 45%;
+        text-decoration: none; /* Remove underline */
+        background-color: #323235;
+      }
+
+      a:hover {
+        background-color: #ddd; /* Grey background color */
+        color: black; /* Black text color */
+      }
+    </style>
+  </head>
+  
+  <body>
+    <div class="login_form">
+      <h1>HaikuVerse</h1>
+      <p>Username: </p> 
+      <input type="text" id="user_field" value=""/>
+      <br>
+      <a href='' onclick="this.href='dashboard.html?user='+document.getElementById('user_field').value">Login</a>
+    </div>
+  </body>
+</html> 

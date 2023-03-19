@@ -1,0 +1,96 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #2a2a2e;
+    color: white;
+}
+
+p, h1 {
+  margin: 2px;
+}
+
+
+
+/* Style the top navigation bar */
+.navbar {
+    overflow: hidden; /* Hide overflow */
+    background-color: #323235; /* Dark background color */
+}
+
+/* Style the navigation bar links */
+.navbar a {
+  float: left; /* Make sure that the links stay side-by-side */
+  display: block; /* Change the display to block, for responsive reasons (see below) */
+  color: white; /* White text color */
+  text-align: center; /* Center the text */
+  padding: 14px 20px; /* Add some padding */
+  text-decoration: none; /* Remove underline */
+}
+
+/* exit link */
+.navbar a.exit {
+  float: right; /* Float a link to the right */
+}
+
+/* Change color on hover/mouse-over */
+.navbar a:hover {
+  background-color: #ddd; /* Grey background color */
+  color: black; /* Black text color */
+}
+
+/* columns */
+.column {
+  float: left;
+  padding: 1%;
+  margin: 1%;
+  background-color: #323235;
+}
+
+.left, .right {
+  width: 20%;
+}
+
+.middle {
+  width: 48%;
+  position: absolute;
+  left: 24%;
+}
+
+.right {
+  position: absolute;
+  left: 76%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.input {
+  padding: 1%;
+  margin: 1%;
+}
+
+/* kuiru */
+#face {
+  width: 100%;
+  position: relative;
+  z-index: auto + 1;
+}
+
+#mouth {
+  width: 100%;
+  position: absolute;
+  left: 0%;
+  z-index: auto;
+}
+
+/* input box */
+#haiku {
+  resize: none; 
+  font-family: Arial, Helvetica, sans-serif;
+  height: 20%;
+  width: 90%;
+  font-size: 100%;
+}

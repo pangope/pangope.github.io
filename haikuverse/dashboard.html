@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
+		<style>
+			/* The Overlay (background) */
+			.overlay {
+				/* Height & width depends on how you want to reveal the overlay (see JS below) */   
+				height: 100%;
+				width: 100%;
+				position: fixed; /* Stay in place */
+				z-index: 1; /* Sit on top */
+				left: 0;
+				top: 0;
+				background-color: rgb(0,0,0); /* Black fallback color */
+				background-color: rgba(0,0,0, 0.9); /* Black w/opacity */
+				overflow-x: hidden; /* Disable horizontal scroll */
+				transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
+			}
+
+			/* Position the content inside the overlay */
+			.overlay-content {
+				position: relative;
+				top: 25%; /* 25% from the top */
+				width: 100%; /* 100% width */
+				text-align: center; /* Centered text/links */
+				margin-top: 30px; /* 30px top margin to avoid conflict with the close button on smaller screens */
+				background-color: #323235;
+				padding: 5px;
+				margin-left: 30%;
+				width: 40%;
+			}
+
+			/* The navigation links inside the overlay */
+			.overlay a {
+				padding: 8px;
+				text-decoration: none;
+				font-size: 36px;
+				color: #818181;
+				display: block; /* Display block instead of inline */
+				transition: 0.3s; /* Transition effects on hover (color) */
+			}
+
+			/* When you mouse over the navigation links, change their color */
+			.overlay a:hover, .overlay a:focus {
+				color: #f1f1f1;
+			}
+
+			/* Position the close button (top right corner) */
+			.overlay .closebtn {
+				position: absolute;
+				top: 20px;
+				right: 45px;
+				font-size: 60px;
+			}
+
+			/* When the height of the screen is less than 450 pixels, change the font-size of the links and position the close button again, so they don't overlap */
+			@media screen and (max-height: 450px) {
+				.overlay a {font-size: 20px}
+				.overlay .closebtn {
+					font-size: 40px;
+					top: 15px;
+					right: 35px;
+				}
+			} 
+		</style>
+		<script src="scripts/textForcer.js"></script>
+		<script src="scripts/haikuCheck.js"></script>
+		<script src="scripts/kuiru.js"></script>
+		<script src="scripts/limitInput.js"></script>
+	</head>
+  
+  <body>
+		<div id="about" class="overlay">
+
+			<!-- Button to close the overlay navigation -->
+			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+		
+			<!-- Overlay content -->
+			<div class="overlay-content">
+				<p>Welcome to HaikuVerse! This is a haiku sharing website for haiku lovers like you. Your haikus can be as abstract as you want, but the first and last lines need to have five syllables. To get started, just post some haikus!</p>
+				<div id="spoilerbtn"><src onclick="showSpoiler()">[spoilers]</src></div>
+				<div id="spoiler" style="display:none">This is a short interactive game about human reliance on AI made for an English project in a weekend.</div>
+			</div>
+		</div>
+
+    <div class="navbar">
+      <a href="#">HaikuVerse</a>
+			<a href="#" onclick="openNav()">About</a>
+			<a href="javascript:void(0)" onclick="forceFull()">text force</a>
+			<a href="javascript:void(0)" onclick="blink()">blink</a>
+      <a href="index.html" class="exit">Exit</a>
+    </div>
+
+		<script>
+			/* opening + closing functions*/
+			function openNav() {
+				document.getElementById("about").style.height = "100%";
+			}
+
+			/* Close */
+			function closeNav() {
+				document.getElementById("about").style.height = "0%";
+			}
+			
+			function showSpoiler() {
+				document.getElementById("spoilerbtn").style = "display:none";
+				document.getElementById("spoiler").style = "display:block";
+				console.log("yo")
+			}
+			
+		</script>
+
+		<div class="row" style="position:relative">
+			<div class="column left">
+				<img src="images/Default_pfp.svg.png" id="pfp" style="width:100%"></img>
+				<h1 id="username">User</h1>
+				<script>
+					/* set username */
+					const url = window.location.search;
+					const urlParams = new URLSearchParams(url);
+					const user = urlParams.get('user')
+					if (user != "") {
+						document.getElementById('username').innerHTML = user;
+					}
+
+					/* set posts */
+					let posts = 0;
+					function updatePosts() {
+						posts += 1;
+						document.getElementById("posts") = "Posts: " + posts;
+					}
+				</script>
+				<p id="posts">Posts: 0</p>
+				<p>Followers: </p>
+				<p>Likes: </p>
+			</div>
+			<div class="column middle">
+				<h1>Haiku here!</h1>
+				<div class="input">
+					<textarea style="display:block" rows="3" cols="60" id="haiku" class="limited"></textarea>
+				</div>
+				<button onclick="checkHaiku(document.getElementById('haiku').value)">Post it!</button>
+				<div class="comments">
+					<h1>Recent comments</h1>
+				</div>
+			</div>
+
+			<div class="column right">
+				<h1>Kuiru</h1>
+				<div class="kuiru" style="position:relative">
+					<img src="images/inactive.png" id="face">
+					<img src="images/mouth3.png" id="mouth">
+				</div>
+				<div id="chathistory"></div>
+				<div id="buttons"></div>
+			</div>
+		</div>
+  </body>
+</html> 
