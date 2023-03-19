@@ -2,9 +2,11 @@
 <html lang="en">
   <head>
     <title>Dashboard</title>
+		<base href="haikuverse">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles.css">
+		<link rel="icon" type="image/x-icon" href="favicon.ico">
 		<style>
 			/* The Overlay (background) */
 			.overlay {
@@ -68,7 +70,7 @@
 			} 
 		</style>
 		<script src="scripts/textForcer.js"></script>
-		<script src="scripts/haikuCheck.js"></script>
+		<script src="scripts/post.js"></script>
 		<script src="scripts/kuiru.js"></script>
 		<script src="scripts/limitInput.js"></script>
 	</head>
@@ -89,7 +91,7 @@
 
     <div class="navbar">
       <a href="#">HaikuVerse</a>
-			<a href="#" onclick="openNav()">About</a>
+			<a href="javascript:void(0)" onclick="openNav()">About</a>
 			<a href="javascript:void(0)" onclick="forceFull()">text force</a>
 			<a href="javascript:void(0)" onclick="blink()">blink</a>
       <a href="index.html" class="exit">Exit</a>
@@ -126,13 +128,6 @@
 					if (user != "") {
 						document.getElementById('username').innerHTML = user;
 					}
-
-					/* set posts */
-					let posts = 0;
-					function updatePosts() {
-						posts += 1;
-						document.getElementById("posts") = "Posts: " + posts;
-					}
 				</script>
 				<p id="posts">Posts: 0</p>
 				<p>Followers: </p>
@@ -141,16 +136,17 @@
 			<div class="column middle">
 				<h1>Haiku here!</h1>
 				<div class="input">
-					<textarea style="display:block" rows="3" cols="60" id="haiku" class="limited"></textarea>
+					<textarea style="display:block" rows="3" cols="60" id="haikubox" class="limited"></textarea>
 				</div>
-				<button onclick="checkHaiku(document.getElementById('haiku').value)">Post it!</button>
-				<div class="comments">
-					<h1>Recent comments</h1>
+				<p id="error"></p>
+				<button class="postbtn" type="button" onclick="post(document.getElementById('haikubox').value)">Post it!</button>
+				<h1>Recent comments</h1>
+				<div id="comments">
+					
 				</div>
 			</div>
 
 			<div class="column right">
-				<h1>Kuiru</h1>
 				<div class="kuiru" style="position:relative">
 					<img src="images/inactive.png" id="face">
 					<img src="images/mouth3.png" id="mouth">

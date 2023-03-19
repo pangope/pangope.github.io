@@ -8,8 +8,6 @@ p, h1 {
   margin: 2px;
 }
 
-
-
 /* Style the top navigation bar */
 .navbar {
     overflow: hidden; /* Hide overflow */
@@ -69,7 +67,6 @@ p, h1 {
 
 .input {
   padding: 1%;
-  margin: 1%;
 }
 
 /* kuiru */
@@ -93,4 +90,31 @@ p, h1 {
   height: 20%;
   width: 90%;
   font-size: 100%;
+}
+
+/* buttons */
+button {
+  display: inline-block; /* Change the display to block, for responsive reasons (see below) */
+  color: white; /* White text color */
+  text-align: center; /* Center the text */
+  padding: 10px; /* Add some padding */
+  text-decoration: none; /* Remove underline */
+  background-color: #2a2a2e;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+button:hover {
+  background-color: #ddd;
+  color: black; 
+}
+
+.postbtn {
+  font-size: 28px;
+}
+
+#error {
+  padding-bottom: 5px;
+  color: red;
 }
