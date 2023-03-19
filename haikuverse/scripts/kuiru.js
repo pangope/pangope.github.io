@@ -3,13 +3,23 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+var active = false;
+
 // face
 async function blink() {
-  expression = document.getElementById("face").getAttribute("src");
-  document.getElementById("face").setAttribute("src", "images/activeblink.png");
-  await sleep(100);
-  document.getElementById("face").setAttribute("src", expression);
-  console.log(expression);
+  while (active === true) {
+    expression = document.getElementById("face").getAttribute("src");
+    document.getElementById("face").setAttribute("src", "images/blink.png");
+    await sleep(100);
+    document.getElementById("face").setAttribute("src", expression);
+    console.log(expression);
+    await sleep(4500 + Math.random() * 1000) // random between 4500 and 5500
+  }
+}
+
+function setFace(face, mouth) {
+  document.getElementById("face").setAttribute("src", "images/"+face+".png");
+  document.getElementById("mouth").setAttribute("src", "images/"+mouth+".png");
 }
 
 var wordSuggestion = "";
@@ -43,11 +53,15 @@ var introDialog = {
   }]
 }
 
-document.addEventListener("DOMContentLoaded", function(event){
+function kuiruCheck(haiku) {
+  postHaiku(haiku);
   if (posts === 2) { 
+    active = true;
+    setFace("inactive", "mouth3");
+    blink();
     ShowDialogUI(introDialog);
   }
-});
+}
 
 function ShowDialogUI(dialog) {
   var history = document.getElementById("chathistory");

@@ -54,7 +54,7 @@ function post(haiku) {
     if (format.toString() === "5,7,5") {
       document.getElementById("error").style = "display:none";
       document.getElementById("haikubox").value = "";
-      postHaiku(haiku);
+      kuiruCheck(haiku);
     } else {
       errormsg("Haikus must follow the 5 7 5 format!");
     }
