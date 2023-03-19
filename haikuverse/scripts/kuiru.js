@@ -12,13 +12,31 @@ async function blink() {
   console.log(expression);
 }
 
+var wordSuggestion = "";
+
 // dialog tree
 var DialogTree = {
   question: "Hi there!",
   responses: [{
     response: "Who are you?",
     followup: {
-      question: "I'm Kuiru, your haiku writing AI assistant!"
+      question: "I'm Kuiru, your haiku writing AI assistant!",
+      responses: [{
+        response: "Cool.",
+        response: "What can you do?",
+        followup: {
+          question: "I'll make your haikus the best they can be! Do you want some suggestions?",
+          responses: [{
+            response: "Sure!",
+            followup: {
+              question: 'Ok! How about you write one that includes "' + wordSuggestion + '"'
+            }
+          }, {
+            response: "Not really...",
+            followup: 'Yeah right. You haikus are terrible, and you know it. How about you write one that includes "' + wordSuggestion + '"'
+          }]
+        }
+      }]
     }
   }]
 }
