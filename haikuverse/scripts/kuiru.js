@@ -15,7 +15,7 @@ async function blink() {
 var wordSuggestion = "";
 
 // dialog tree
-var DialogTree = {
+var introDialog = {
   question: "Hi there!",
   responses: [{
     response: "Who are you?",
@@ -29,11 +29,13 @@ var DialogTree = {
           responses: [{
             response: "Sure!",
             followup: {
-              question: 'Ok! How about you write one that includes "' + wordSuggestion + '"'
+              question: 'Ok! How about you write one that includes "' + wordSuggestion + '"?'
             }
           }, {
             response: "Not really...",
-            followup: 'Yeah right. You haikus are terrible, and you know it. How about you write one that includes "' + wordSuggestion + '"'
+            followup: {
+              question: 'Yeah right. You\'ll need my help if you want to write anything good. How about you write one that includes "' + wordSuggestion + '"?'
+            }
           }]
         }
       }]
@@ -42,12 +44,16 @@ var DialogTree = {
 }
 
 document.addEventListener("DOMContentLoaded", function(event){
-  ShowDialogUI(DialogTree);
+  if (posts === 2) { 
+    ShowDialogUI(introDialog);
+  }
 });
 
 function ShowDialogUI(dialog) {
   var history = document.getElementById("chathistory");
+  history.value = "";
   var buttons = document.getElementById("buttons");
+  buttons.value = "";
   if (dialog.question) {
     history.appendChild(document.createElement("div")).appendChild(document.createTextNode(dialog.question));
   }
