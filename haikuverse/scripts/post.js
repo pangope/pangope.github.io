@@ -56,7 +56,7 @@ function post(haiku) {
       document.getElementById("haikubox").value = "";
       kuiruCheck(haiku);
     } else {
-      errormsg("Haikus must follow the 5 7 5 format!");
+      errormsg("Haikus must follow the 5 7 5 format - this appears to be " + format.toString().replace(/,/g, " ") + ", but that could be wrong.");
     }
   } else {
     errormsg("Haikus must have three lines!");
@@ -65,13 +65,14 @@ function post(haiku) {
 
 /* set posts */
 let posts = 0;
-function postHaiku(haiku) {
+function postHaiku(haiku, likes) {
   var post = document.createElement("div");
   console.log(haiku);
   for (let i = 0; i < haiku.split("\n").length; i++){
     post.appendChild(document.createTextNode(haiku.split("\n")[i]));
     post.appendChild(document.createElement("br"));
   }
+  post.appendChild(document.createTextNode("♥ " + likes));
   document.getElementById("comments").appendChild(post);
   posts += 1;
   document.getElementById("posts").innerHTML = "Posts: " + posts;

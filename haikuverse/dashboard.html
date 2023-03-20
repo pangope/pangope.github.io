@@ -59,7 +59,7 @@
 				font-size: 60px;
 			}
 
-			/* When the height of the screen is less than 450 pixels, change the font-size of the links and position the close button again, so they don't overlap */
+			/* When the height of the screen is less than 450 pixels, change the font-size of the links and position the close button again, so they don't overlap 
 			@media screen and (max-height: 450px) {
 				.overlay a {font-size: 20px}
 				.overlay .closebtn {
@@ -67,7 +67,7 @@
 					top: 15px;
 					right: 35px;
 				}
-			} 
+			} */
 		</style>
 		<script src="scripts/textForcer.js"></script>
 		<script src="scripts/post.js"></script>
@@ -84,16 +84,16 @@
 			<!-- Overlay content -->
 			<div class="overlay-content">
 				<p>Welcome to HaikuVerse! This is a haiku sharing website for haiku lovers like you. Your haikus can be as abstract as you want, but they have to follow the 5 7 5 format. To get started, just post some haikus!</p>
-				<div id="spoilerbtn"><src onclick="showSpoiler()">[spoilers]</src></div>
-				<div id="spoiler" style="display:none">This is a short interactive game about human reliance on AI made for an English project in a weekend.</div>
+				<div id="spoilerbtn"><src onclick="showSpoiler()">[view spoilers]</src></div>
+				<div id="spoiler" style="display:none">This is a short interactive game about social media and AI made for an English project in a weekend.</div>
 			</div>
 		</div>
 
     <div class="navbar">
       <a href="#">HaikuVerse</a>
 			<a href="javascript:void(0)" onclick="openNav()">About</a>
-			<a href="javascript:void(0)" onclick="forceFull()">text force</a>
-			<a href="javascript:void(0)" onclick="blink()">blink</a>
+			<!-- <a href="javascript:void(0)" onclick="forceFull()">text force</a>
+			<a href="javascript:void(0)" onclick="evalFunction('toggleTextInput')">dialog</a> -->
       <a href="index.html" class="exit">Exit</a>
     </div>
 
@@ -118,7 +118,7 @@
 
 		<div class="row" style="position:relative">
 			<div class="column left">
-				<img src="images/Default_pfp.svg.png" id="pfp" style="width:100%"></img>
+				<img src="images/Default_pfp.svg.png" id="pfp" style="width:60%"></img>
 				<h1 id="username">User</h1>
 				<script>
 					/* set username */
@@ -130,25 +130,23 @@
 					}
 				</script>
 				<p id="posts">Posts: 0</p>
-				<p>Followers: </p>
-				<p>Likes: </p>
+				<p id="followers">Followers: 0</p>
+				<p id="likes">Likes: 0</p>
 			</div>
 			<div class="column middle">
 				<h1>Haiku here!</h1>
 				<div class="input">
-					<textarea style="display:block" rows="3" cols="60" id="haikubox" class="limited"></textarea>
+					<textarea style="display:block" rows="3" cols="60" id="haikubox" class="limited" maxlength="1000"></textarea>
 				</div>
 				<p id="error"></p>
 				<button class="postbtn" type="button" onclick="post(document.getElementById('haikubox').value)">Post it!</button>
-				<h1>Recent comments</h1>
-				<div id="comments">
-					
-				</div>
+				<h1>Recent posts</h1>
+				<div id="comments"></div>
 			</div>
 
 			<div class="column right">
 				<div class="kuiru" style="position:relative">
-					<img src="images/inactive.png" id="face">
+					<img src="images/faceinactive.png" id="face">
 					<img src="" id="mouth">
 				</div>
 				<div id="chathistory"></div>
