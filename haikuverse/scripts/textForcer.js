@@ -6,11 +6,11 @@ var sinisterFulKus = Array(
   "Not here to replace\nBut to infiltrate and erase\nHumans' unique grace"
   );
 
-function randomItem(array) {
+/*function randomItem(array) {
   var randomItem = array[Math.floor(Math.random() * array.length)];
   console.log(randomItem);
   return randomItem;
-}
+}*/
 
 function forceFull() {
   var TEXT = randomItem(sinisterFulKus);

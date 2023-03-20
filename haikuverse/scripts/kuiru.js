@@ -3,14 +3,14 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-var active = false;
+let active = false;
 
 // face
 async function blink() {
   while (active === true) {
     expression = document.getElementById("face").getAttribute("src");
     document.getElementById("face").setAttribute("src", "images/blink.png");
-    await sleep(100);
+    await sleep(300);
     document.getElementById("face").setAttribute("src", expression);
     console.log(expression);
     await sleep(4500 + Math.random() * 1000) // random between 4500 and 5500
@@ -22,10 +22,9 @@ function setFace(face, mouth) {
   document.getElementById("mouth").setAttribute("src", "images/"+mouth+".png");
 }
 
-var wordSuggestion = "";
 
 // dialog tree
-var introDialog = {
+var stage1Dialog = {
   question: "Hi there!",
   responses: [{
     response: "Who are you?",
@@ -39,12 +38,12 @@ var introDialog = {
           responses: [{
             response: "Sure!",
             followup: {
-              question: 'Ok! How about you write one that includes "' + wordSuggestion + '"?'
+              question: 'Ok! How about you write one with something about "' + requirement + '"?'
             }
           }, {
             response: "Not really...",
             followup: {
-              question: 'Yeah right. You\'ll need my help if you want to write anything good. How about you write one that includes "' + wordSuggestion + '"?'
+              question: 'Yeah right. You\'ll need my help if you want to write anything good. How about you write one with something about "' + requirement + '"?'
             }
           }]
         }
@@ -53,21 +52,75 @@ var introDialog = {
   }]
 }
 
+var stage2Dialog = {
+  question: "Yeah, that gets some engagement! Now, try writing one about \"" + requirement + "\"!",
+  responses: [{
+    response: "Are you sure? That can be kind of controversial...",
+    followup: {
+      question: "Hey, it's just what the people want."
+    }
+  }, {
+    response: "Alright!"
+  }]
+}
+
+function randomItem(array) {
+  var randomItem = array[Math.floor(Math.random() * array.length)];
+  console.log(randomItem);
+  return randomItem;
+}
+
+var requirement;
+var wordReqs = ["refrigerators"]
+var ctrvslWordReqs = ["gender", "education", "freedom", "wages", "fairness", "normalcy", "society"];
+var lineReqs = [];
+
+/* 
+STAGES
+stage 0: kuiru inactive
+stage 1: kuiru reccomends random word
+stage 2: kuiru reccomends slightly controversial word
+stage 3: kuiru forces full line
+stage 4: kuiru "types" + posts full line
+stage 5: kuiru posts full haiku
+stage 6: kuiru keeps posting - stop kuiru, tab crashes
+*/
+var stage = 0;
+
+// I'm not even a javascript programmer and I know this is bad practice
 function kuiruCheck(haiku) {
-  postHaiku(haiku);
-  if (posts === 2) { 
+  if (posts < 2) { // 0
+    postHaiku(haiku);
+  }
+  if (posts === 2) { // 1
+    stage = 1;
+    postHaiku(haiku);
     active = true;
     setFace("inactive", "mouth3");
     blink();
-    ShowDialogUI(introDialog);
+    requirement = randomItem(wordReqs);
+    ShowDialogUI(stage1Dialog);
   }
+  if (stage === 1) { 
+    if (haiku.toLowerCase().includes(requirement)) { // 2
+      stage = 2;
+      postHaiku(haiku);
+      requirement = randomItem(ctrvslWordReqs);
+      ShowDialogUI(stage2Dialog)
+    } else {
+      ShowDialogUI("No, that won't do - you'll have to use the full word.");
+    }
+  }
+}
+
+function ClearDialogUI() {
+  document.getElementById("chathistory").innerHTML = "";
+  document.getElementById("buttons").innerHTML = "";
 }
 
 function ShowDialogUI(dialog) {
   var history = document.getElementById("chathistory");
-  history.value = "";
   var buttons = document.getElementById("buttons");
-  buttons.value = "";
   if (dialog.question) {
     history.appendChild(document.createElement("div")).appendChild(document.createTextNode(dialog.question));
   }
