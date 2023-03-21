@@ -151,7 +151,7 @@ var stage3Dialog = {
   question: "You're really getting into it! And check this out - I can generate full lines now!",
   expression: ["joy", "triangle"],
   responses: [{
-    response: "WHOAH THERE",
+    response: "WOAH THERE",
     followup: {
       question: "Is there a problem?",
       expression: ["sad", "3"],
@@ -237,7 +237,7 @@ function kuiruCheck(haiku) {
       ClearDialogUI();
       ShowDialogUI(stage2Dialog);
     } else {
-      postHaiku(haiku);
+      postHaiku(haiku, addStats(1));
       AppendDialog("No, that won't do - try using the full word.");
     }
   } else if (stage === 2 && document.getElementById("buttons").innerHTML === "") {
