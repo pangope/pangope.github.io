@@ -73,7 +73,8 @@ document.addEventListener("DOMContentLoaded", function(event){
     element.addEventListener('keydown', limitLines);
     element.addEventListener('keyup', setNumberOfLines);
     element.addEventListener('cut', setNumberOfLines);
-    element.addEventListener('paste', limitPaste);
+    //element.addEventListener('paste', limitPaste);
+    element.onpaste = e => e.preventDefault();
     //console.log(element);
   });
 });

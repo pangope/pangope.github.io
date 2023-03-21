@@ -49,7 +49,7 @@ function errormsg(error) {
 function post(haiku) {
   console.log(count_how_many_syllables(haiku));
   var format = count_how_many_syllables(haiku);
-  console.log(format.toString());
+  //console.log(format.toString());
   if (format.length === 3) {
     if (format.toString() === "5,7,5") {
       document.getElementById("error").style = "display:none";
