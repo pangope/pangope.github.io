@@ -69,6 +69,7 @@ var TEXT = randomItem(fullHaikus);
 
 function forceFull() {
   enableTextInput();
+  document.getElementById("haikubox").value = "";
   var newTEXT = randomItem(fullHaikus);
   while (newTEXT === TEXT){
     newTEXT = randomItem(fullHaikus);
@@ -85,7 +86,6 @@ function forceFull() {
           this.selectionStart = this.selectionEnd = start + 1;
         } else {
           kuiruCheck(TEXT);
-          document.getElementById("haikubox").value = "";
           forceFull();
         }
       // }
@@ -116,7 +116,7 @@ var stage1Dialog = {
           }, {
             response: "Not really...",
             followup: {
-              question: 'Yeah right. You\'ll need my help if you want to write anything good. How about you write one with something about "' + wordReq + '"',
+              question: 'Yeah right. You\'ll need my help if you want to write anything good. How about you write one with something about "' + wordReq + '"?',
               expression: ["joy", "straight"],
               funct: "enableTextInput"
             }
