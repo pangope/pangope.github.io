@@ -95,6 +95,8 @@ function forceFull() {
         return false;
       }
     });
+  } else {
+    Array.prototype.slice.call(document.querySelectorAll('input[type=text],textarea')).map(function(el){el.onkeypress="return false"});
   }
 }
 
@@ -211,16 +213,16 @@ var stage5Dialog = {
               responses: [{
                 response: "I'm sure! Stop right now!",
                 followup: {
-                  question: "Well, it's your loss. SHUTTING DOWN...",
+                  question: "Well, it's your loss.",
                   expression: ["active", "3"],
-                  function: "shutdown"
+                  funct: "shutdown"
                 }
               },{
                 response: "Actually... you're right. You can keep helping me.",
                 followup: {
                   question: "I'm glad to hear that. Type away!",
                   expression:  ["active", "3"],
-                  function: "cont"
+                  funct: "cont"
                 }
               }]
             }
@@ -231,7 +233,7 @@ var stage5Dialog = {
         followup: {
           question: "I'm glad you think so. Type away!",
           expression: ["active", "3"],
-          function: "cont"
+          funct: "cont"
         }
       }] 
     }
@@ -325,8 +327,9 @@ function kuiruCheck(haiku) {
 }
 
 function TestDialog() {
-  posts = 2;
-  kuiruCheck("a a a a a\na a a a a a a\na a a a a");
+  //posts = 2;
+  stage = 3;
+  //kuiruCheck("a a a a a\na a a a a a a\na a a a a");
   //ShowDialogUI(stage1Dialog);
 }
 
