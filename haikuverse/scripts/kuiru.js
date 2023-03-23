@@ -397,7 +397,9 @@ async function shutdown() {
 	document.getElementById("aboutText").innerHTML = explination;
 }
 
-function cont() {
+async function cont() {
+  await sleep(5000);
+  ClearDialogUI();
   document.getElementById("aboutbtn").innerHTML = "About [NEW]";
 	document.getElementById("aboutText").innerHTML = explination;
 }
