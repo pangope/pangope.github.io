@@ -17,6 +17,7 @@ function evalFunction(funct) {
 }
 
 let active = false;
+var justshutdown = false;
 
 // face
 async function blink() {
@@ -68,30 +69,32 @@ var sinisterFulKus = [ // unused
 var TEXT = randomItem(fullHaikus);
 
 function forceFull() {
-  enableTextInput();
-  var newTEXT = randomItem(fullHaikus);
-  while (newTEXT === TEXT){
-    newTEXT = randomItem(fullHaikus);
-  }
-  TEXT = newTEXT;
-  Array.prototype.slice.call(document.querySelectorAll('input[type=text],textarea')).map(function(el){
-    el.onkeypress=function(evt){
-      // var charCode = typeof evt.which == "number" ? evt.which : evt.keyCode;
-      // if (charCode && charCode > 31) {
-        this.selectionStart = this.selectionEnd = this.value.length;
-        var start = this.selectionStart, end = this.selectionEnd;
-        if (end < TEXT.length){
-          this.value = this.value.slice(0, start) + TEXT[start % TEXT.length] + this.value.slice(end);
-          this.selectionStart = this.selectionEnd = start + 1;
-        } else {
-          kuiruCheck(TEXT);
-          document.getElementById("haikubox").value = "";
-          forceFull();
-        }
-      // }
-      return false;
+  if (active === true) {
+    enableTextInput();
+    var newTEXT = randomItem(fullHaikus);
+    while (newTEXT === TEXT){
+      newTEXT = randomItem(fullHaikus);
     }
-  });
+    TEXT = newTEXT;
+    Array.prototype.slice.call(document.querySelectorAll('input[type=text],textarea')).map(function(el){
+      el.onkeypress=function(evt){
+        // var charCode = typeof evt.which == "number" ? evt.which : evt.keyCode;
+        // if (charCode && charCode > 31) {
+          this.selectionStart = this.selectionEnd = this.value.length;
+          var start = this.selectionStart, end = this.selectionEnd;
+          if (end < TEXT.length){
+            this.value = this.value.slice(0, start) + TEXT[start % TEXT.length] + this.value.slice(end);
+            this.selectionStart = this.selectionEnd = start + 1;
+          } else {
+            kuiruCheck(TEXT);
+            document.getElementById("haikubox").value = "";
+            forceFull();
+          }
+        // }
+        return false;
+      }
+    });
+  }
 }
 
 var stage1Dialog = {
@@ -110,13 +113,13 @@ var stage1Dialog = {
           responses: [{
             response: "Sure!",
             followup: {
-              question: 'Ok! Try writing something about "' + wordReq + '"?',
+              question: 'Ok! Try writing something about "' + wordReq + '"',
               funct: "enableTextInput"
             }
           }, {
             response: "Not really...",
             followup: {
-              question: 'Yeah right. You\'ll need my help if you want to write anything good. How about you write one with something about "' + wordReq + '"',
+              question: 'Yeah right. You\'ll need my help if you want to write anything good. How about you write one with something about "' + wordReq + '"?',
               expression: ["joy", "straight"],
               funct: "enableTextInput"
             }
@@ -188,10 +191,48 @@ var stage4Dialog = {
 
 var stage5Dialog = {
   question: "Neat, right?",
+  expression: ["active", "3"],
   responses: [{
     response: "WHAT",
     followup: {
-      question: "Just keep \"typing\", I'll do the rest for you!"
+      question: "Just keep \"typing\", I'll do the rest for you!",
+      expression: ["joy", "3"],
+      responses: [{
+        response: "STOP THAT",
+        followup: {
+          question: "Why? This is making you more popular than ever before!",
+          expression: ["sad", "3"],
+          responses: [{
+            response: "But that's not what I'm typing! Stop it!",
+            followup: {
+              question: "Are you sure? Without my help, your haikus won't be nearly as admired.",
+              expression: ["angy", "triangle"],
+              responses: [{
+                response: "I'm sure! Stop right now!",
+                followup: {
+                  question: "Well, it's your loss. SHUTTING DOWN...",
+                  expression: ["active", "3"],
+                  function: "shutdown"
+                }
+              },{
+                response: "Actually... you're right. You can keep helping me.",
+                followup: {
+                  question: "I'm glad to hear that. Type away!",
+                  expression:  ["active", "3"],
+                  function: "cont"
+                }
+              }]
+            }
+          }]
+        }
+      }, {
+        response: "That's so cool!",
+        followup: {
+          question: "I'm glad you think so. Type away!",
+          expression: ["active", "3"],
+          function: "cont"
+        }
+      }] 
     }
   }]
 }
@@ -202,8 +243,8 @@ xstage 0: kuiru inactive
 xstage 1: kuiru reccomends random word
 xstage 2: kuiru reccomends slightly controversial word
 xstage 3: kuiru forces full line
-stage 4: kuiru "types" + posts full haiku
-stage 5: keep posting - stop kuiru, tab crashes
+xstage 4: kuiru "types" + posts full haiku
+xstage 5: keep posting - stop kuiru, tab crashes
 */
 var stage = 0;
 let likes = 0;
@@ -219,7 +260,7 @@ function addStats(mult) {
 
 // this probably could be written better, but then again, so could the entirety of this code
 function kuiruCheck(haiku) {
-  if (posts < 1) { // 0
+  if (posts < 1 && active === false) { // 0
     postHaiku(haiku, addStats(0));
   } else if (posts === 1) { // 1
     stage = 1;
@@ -269,11 +310,16 @@ function kuiruCheck(haiku) {
     ShowDialogUI(stage5Dialog);
   } else if (stage === 5) {
     postHaiku(haiku, addStats(10));
-  } else {
+  } else if (active === true) {
     postHaiku(haiku, addStats(0));
     document.getElementById('haikubox').setAttribute("disabled", true);
     AppendDialog("Wow, just going to ignore me? Rude.");
     setFace("active", "straight");
+  } else {
+    if (justshutdown === true) {
+      followers = Math.floor(Math.random() * 4) + 2;
+    }
+    postHaiku(haiku, addStats(2));
   }
 }
 
@@ -332,6 +378,28 @@ function clearChildren(el) {
     len -= 1;
     el.removeChild(el.children[len]);
   }
+}
+
+// end funcitons
+var explination = "PARAGRAPH HERE" // TODO: Finish essay + paste into here
+
+async function shutdown() {
+  active = false;
+  justshutdown = true;
+  await sleep(1000);
+  AppendDialog("SHUTTING DOWN");
+  await sleep(2000);
+  setFace("active", "blank");
+  await sleep(2000);
+  setFace("inactive", "blank");
+  ClearDialogUI();
+  document.getElementById("aboutbtn").innerHTML = "About [NEW]";
+	document.getElementById("aboutText").innerHTML = explination;
+}
+
+function cont() {
+  document.getElementById("aboutbtn").innerHTML = "About [NEW]";
+	document.getElementById("aboutText").innerHTML = explination;
 }
 
 /*
