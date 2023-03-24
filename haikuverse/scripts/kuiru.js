@@ -7,7 +7,7 @@ function sleep(ms) {
 
 function randomItem(array) {
   var randomItem = array[Math.floor(Math.random() * array.length)];
-  console.log(randomItem);
+  //console.log(randomItem);
   return randomItem;
 }
 
@@ -17,7 +17,7 @@ function evalFunction(funct) {
 }
 
 let active = false;
-var justshutdown = false;
+let justshutdown = false;
 
 // face
 async function blink() {
@@ -254,7 +254,7 @@ let likes = 0;
 let followers = 0;
 function addStats(mult) {
   var postLikes = (mult * 3 + Math.floor(Math.random() * 5)) + followers;
-  followers += Math.floor(Math.random() * mult);
+  followers += Math.floor(Math.random() * mult) + mult;
   likes += postLikes;
   document.getElementById("likes").innerHTML = "Likes: " + likes;
   document.getElementById("followers").innerHTML = "Followers: " + followers;
@@ -311,7 +311,7 @@ function kuiruCheck(haiku) {
     postHaiku(haiku, addStats(8));
     ClearDialogUI();
     ShowDialogUI(stage5Dialog);
-  } else if (stage === 5) {
+  } else if (stage === 5 && active === true) {
     postHaiku(haiku, addStats(10));
   } else if (active === true) {
     postHaiku(haiku, addStats(0));
@@ -385,7 +385,7 @@ function clearChildren(el) {
 }
 
 // end funcitons
-var explination = "PARAGRAPH HERE" // TODO: Finish essay + paste into here
+var explination = "Welcome to HaikuVerse! This is a project created for an English assignment about artistic expression. If you want, you can reload the tab to restart or keep posting haikus to infinitely increase your followers and likes. Thank you for playing!";
 
 async function shutdown() {
   active = false;

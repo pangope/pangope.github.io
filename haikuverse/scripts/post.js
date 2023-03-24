@@ -34,7 +34,7 @@ function count_how_many_syllables(input) {
       word = word.replace(/(?:[^laeiouy]|ed|[^laeiouy]e)$/, '').replace(/^y/, '');                                 
       //return word.match(/[aeiouy]{1,2}/g).length;
       var syl = word.match(/[aeiouy]{1,2}/g);
-      console.log(syl);
+      //console.log(syl);
       if(syl) {
         //console.log(syl);
         word = syl.length+t_some;
@@ -55,7 +55,7 @@ function errormsg(error) {
 }
 
 function post(haiku) {
-  console.log(count_how_many_syllables(haiku));
+  //console.log(count_how_many_syllables(haiku));
   var format = count_how_many_syllables(haiku);
   //console.log(format.toString());
   if (format.length === 3) {
@@ -75,7 +75,7 @@ function post(haiku) {
 let posts = 0;
 function postHaiku(haiku, likes) {
   var post = document.createElement("div");
-  console.log(haiku);
+  //console.log(haiku);
   for (let i = 0; i < haiku.split("\n").length; i++){
     post.appendChild(document.createTextNode(haiku.split("\n")[i]));
     post.appendChild(document.createElement("br"));
