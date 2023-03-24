@@ -390,6 +390,7 @@ var explination = "PARAGRAPH HERE" // TODO: Finish essay + paste into here
 async function shutdown() {
   active = false;
   justshutdown = true;
+  Array.prototype.slice.call(document.querySelectorAll('input[type=text],textarea')).map(function(el){el.onkeypress="return false"});
   await sleep(1000);
   AppendDialog("SHUTTING DOWN");
   await sleep(2000);

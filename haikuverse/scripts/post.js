@@ -1,3 +1,4 @@
+// https://stackoverflow.com/questions/5686483/how-to-compute-number-of-syllables-in-a-word-in-javascript
 // TODO: fix commas breaking everything
 function count_how_many_syllables(input) {
 
@@ -10,6 +11,7 @@ function count_how_many_syllables(input) {
   var linetotal;
   var result;
 
+  // .replace(/[^a-zA-Z ]/g, "")
   for(var i = 0; i < arrayOfLines.length; i++){
     content = arrayOfLines[i].split(' ');
     //console.log(content);
@@ -17,19 +19,25 @@ function count_how_many_syllables(input) {
     for(var l = 0; l < content.length; l++){
       word = content[l];
       //console.log(word.length);
-      word = word.toLowerCase().replace(/,/g, '');
-      //console.log(word);
-      if (word.length === 0) {
-        word = 0;
-      } else if (word === "ai") {
-        word = 2;
-        //console.log("ai detected")
-      } else if (word.length <= 3) {
-        word = 1;
-      } else {
-        word = word.replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '')
-        .replace(/^y/, '')
-        .match(/[aeiouy]{1,2}/g).length;
+      word = word.toLowerCase().replace(/[^a-zA-Z ]/g, "");
+      if (word === "ai") { // check for "ai"
+        linetotal += 2;
+        continue;
+      }
+      var t_some = 0;
+      if(word.length>3) {
+        if(word.substring(0,4)=="some") {
+          word = word.replace("some","");
+          t_some++;
+        }
+      }
+      word = word.replace(/(?:[^laeiouy]|ed|[^laeiouy]e)$/, '').replace(/^y/, '');                                 
+      //return word.match(/[aeiouy]{1,2}/g).length;
+      var syl = word.match(/[aeiouy]{1,2}/g);
+      console.log(syl);
+      if(syl) {
+        //console.log(syl);
+        word = syl.length+t_some;
       }
       syllable_count = word;
       linetotal += syllable_count;
